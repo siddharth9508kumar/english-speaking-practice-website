@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpeakUp — AI English Speaking Practice</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Ambient background grid -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-dot"></span>
+                <span class="logo-text">SpeakUp</span>
+                <span class="logo-tag">AI Practice Studio</span>
+            </div>
+            <div class="header-status">
+                <span class="status-pill" id="statusPill">● Idle</span>
+                <button class="btn btn-ghost" id="fullscreenBtn" title="Fullscreen Mode">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                    </svg>
+                    Fullscreen
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN LAYOUT ===== -->
+    <main class="main-layout" id="mainLayout">
+
+        <!-- ===== TEXT PANEL ===== -->
+        <section class="text-panel" id="textPanel">
+
+            <div class="panel-header">
+                <div class="panel-label">PRACTICE TEXT</div>
+                <div class="text-meta" id="textMeta">
+                    <span id="wordCountBadge" class="badge">— words</span>
+                    <span id="difficultyBadge" class="badge badge-accent">—</span>
+                </div>
+            </div>
+
+            <!-- Text display area -->
+            <div class="text-display" id="textDisplay">
+                <div class="text-placeholder">
+                    <div class="placeholder-icon">◎</div>
+                    <p>Click <strong>Generate Text</strong> to load a practice paragraph.</p>
+                </div>
+            </div>
+
+            <!-- Live transcript -->
+            <div class="transcript-container" id="transcriptContainer">
+                <div class="transcript-label">
+                    <span class="live-dot" id="liveDot"></span>
+                    LIVE TRANSCRIPT
+                </div>
+                <div class="transcript-text" id="transcriptText">Your spoken words will appear here...</div>
+            </div>
+
+        </section>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Camera Preview -->
+            <div class="camera-widget" id="cameraWidget">
+                <div class="camera-header">
+                    <span class="camera-label">CAMERA</span>
+                    <span class="camera-status" id="cameraStatus">OFF</span>
+                </div>
+                <div class="camera-viewport" id="cameraViewport">
+                    <video id="cameraVideo" autoplay muted playsinline></video>
+                    <div class="camera-overlay" id="cameraOverlay">
+                        <div class="camera-icon">⬡</div>
+                        <p>Camera Off</p>
+                    </div>
+                    <div class="camera-rec" id="cameraRec">
+                        <span class="rec-dot"></span> REC
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer Widget -->
+            <div class="timer-widget">
+                <div class="timer-label">ELAPSED TIME</div>
+                <div class="timer-display" id="timerDisplay">
+                    <span id="timerMin">00</span><span class="timer-colon">:</span><span id="timerSec">00</span>
+                </div>
+                <div class="timer-bar-track">
+                    <div class="timer-bar" id="timerBar"></div>
+                </div>
+            </div>
+
+            <!-- Score Preview -->
+            <div class="score-preview" id="scorePreview">
+                <div class="score-row">
+                    <span class="score-label">Accuracy</span>
+                    <span class="score-val" id="liveAccuracy">—</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Words Spoken</span>
+                    <span class="score-val" id="liveWords">—</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Best Streak</span>
+                    <span class="score-val" id="liveStreak">—</span>
+                </div>
+            </div>
+
+        </aside>
+    </main>
+
+    <!-- ===== CONTROL BAR ===== -->
+    <footer class="control-bar" id="controlBar">
+        <div class="control-inner">
+            <div class="control-group">
+                <button class="btn btn-primary" id="generateBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 .49-4.96" />
+                    </svg>
+                    Generate Text
+                </button>
+            </div>
+            <div class="control-group">
+                <button class="btn btn-secondary" id="startCameraBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 7 16 12l7 5V7z" />
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                    </svg>
+                    Start Camera
+                </button>
+                <button class="btn btn-secondary" id="stopCameraBtn" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="2" />
+                    </svg>
+                    Stop Camera
+                </button>
+            </div>
+            <div class="control-group">
+                <button class="btn btn-success" id="startSpeakBtn" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                        <line x1="12" y1="19" x2="12" y2="23" />
+                        <line x1="8" y1="23" x2="16" y2="23" />
+                    </svg>
+                    Start Speaking
+                </button>
+                <button class="btn btn-danger" id="stopSpeakBtn" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                    </svg>
+                    Stop Speaking
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SCORE CARD MODAL ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="score-modal" id="scoreModal">
+            <div class="modal-header">
+                <div class="modal-title">Session Complete</div>
+                <div class="modal-subtitle">Here's how you did</div>
+            </div>
+
+            <div class="modal-score-ring">
+                <svg class="ring-svg" viewBox="0 0 120 120">
+                    <circle class="ring-bg" cx="60" cy="60" r="50" />
+                    <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50" stroke-dasharray="314"
+                        stroke-dashoffset="314" />
+                </svg>
+                <div class="ring-center">
+                    <div class="ring-pct" id="ringPct">0%</div>
+                    <div class="ring-label">Accuracy</div>
+                </div>
+            </div>
+
+            <div class="modal-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">⏱</div>
+                    <div class="stat-val" id="statTime">0s</div>
+                    <div class="stat-name">Time Taken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-val" id="statWords">0</div>
+                    <div class="stat-name">Words Spoken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-val" id="statAccuracy">0%</div>
+                    <div class="stat-name">Word Match</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-val" id="statWPM">0</div>
+                    <div class="stat-name">Words/Min</div>
+                </div>
+            </div>
+
+            <div class="modal-feedback" id="modalFeedback"></div>
+
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="tryAgainBtn">Try Again</button>
+                <button class="btn btn-ghost" id="closeModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ERROR TOAST ===== -->
+    <div class="toast" id="errorToast">
+        <span class="toast-icon">⚠</span>
+        <span id="toastMsg">Error message</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
