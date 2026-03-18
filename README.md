@@ -2,6 +2,8 @@
 
 A fully client-side English speaking practice website built with pure HTML, CSS, and JavaScript. Designed to simulate a real presentation environment, SpeakUp lets you read aloud, records your speech, tracks your accuracy word-by-word, and scores your performance — all in the browser with no server or account required.
 
+🌐 **Live Site:** [https://siddharth9508kumar.github.io/english-speaking-practice-website/](https://siddharth9508kumar.github.io/english-speaking-practice-website/)
+
 ---
 
 ## Screenshots
@@ -91,17 +93,23 @@ No build tools, no package manager, no dependencies. Every file is self-containe
 
 ## Getting Started
 
-### Option 1 — Python local server (recommended)
+### Option 1 — Live Site (no setup required)
+Visit the deployed version directly in your browser:
+**[https://siddharth9508kumar.github.io/english-speaking-practice-website/](https://siddharth9508kumar.github.io/english-speaking-practice-website/)**
+
+> Use **Google Chrome** for the best experience — the Web Speech API is fully supported there.
+
+### Option 2 — Python local server
 ```bash
 cd speakup
 python -m http.server 8000
 ```
 Then open `http://localhost:8000` in **Google Chrome**.
 
-### Option 2 — VS Code Live Server
+### Option 3 — VS Code Live Server
 Install the **Live Server** extension, right-click `index.html`, and choose **Open with Live Server**.
 
-### Option 3 — Any static host
+### Option 4 — Any static host
 Upload the three files to GitHub Pages, Netlify, Vercel, or any static hosting service. HTTPS is required for microphone access on deployed sites.
 
 > **Do not open `index.html` directly as a `file://` URL.** Browsers block microphone and camera access on the `file://` protocol. A local server is required.
@@ -124,7 +132,7 @@ The Web Speech API is a Chrome-first technology. **Google Chrome** gives the mos
 
 ## How to Use
 
-1. **Open** the site in Chrome via a local server
+1. **Open** the [live site](https://siddharth9508kumar.github.io/english-speaking-practice-website/) in Chrome
 2. Click **Generate Text** to load a random practice paragraph (or press `Space`)
 3. Click **Start Camera** to enable your webcam preview *(optional)*
 4. Click **Start Speaking** (or press `Enter`) — the timer starts and the microphone activates
